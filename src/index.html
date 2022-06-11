@@ -12,8 +12,6 @@
     <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
-
-    
   </head>
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -31,14 +29,12 @@
             <p class="text-center">Loading...</p>
           </div>
             <div id="content">
-              
               <form action="action_page.php" method="post">
                 <div class="container">
                   <label for="email"><b>E-mail</b></label>
-                  <input type="text" placeholder="Enter E-mail" name="email" required>
-                  
+                  <input type="text" id="txtBoxEmail" placeholder="Enter E-mail" name="email" required>
                   <label for="psw"><b>Password</b></label>
-                  <input type="password" placeholder="Enter Password" name="psw" required>
+                  <input type="password" id="txtBoxPwd" placeholder="Enter Password" name="psw" required>
                   <form action="#">
                     <label for="logInChoice"><b>Login as </b></label>
                     <select name="choice" id="logInChoice">
@@ -65,5 +61,6 @@
     <!-- <script src="vendor/truffle-contract/dist/truffle-contract.js"></script> -->
     <script src="app.js"></script>
     <script src="eventHandlers.js"></script>
+    <script src="dummyData.json"></script>
   </body>
 </html>
