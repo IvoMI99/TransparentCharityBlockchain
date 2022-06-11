@@ -18,24 +18,10 @@ btnLogIn.addEventListener('click', () => {
         let logInChoice = document.querySelector('#logInChoice');
         if (logInChoice.value == DONOR) {
             // load layout for donors
-            var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            xhr.open('get', './btn.html', true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    content.innerHTML = xhr.responseText;
-                }
-            }
-            xhr.send();
+            loadLayoutPage('./btn.html');
         } else if (logInChoice.value == BENEFICIARY) {
             // load layout for beneficiary
-            var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            xhr.open('get', './btn.html', true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    content.innerHTML = xhr.responseText;
-                }
-            }
-            xhr.send();
+            loadLayoutPage('./btn.html');
         }
     } else {
         //print no such an user
@@ -57,4 +43,15 @@ function isValidUser(email, password) {
         });
         return false
     });
+}
+
+function loadLayoutPage(sourceHtml) {
+    var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    xhr.open('get', sourceHtml , true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            content.innerHTML = xhr.responseText;
+        }
+    }
+    xhr.send();
 }
