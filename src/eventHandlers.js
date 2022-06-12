@@ -5,32 +5,14 @@ let content = document.querySelector('#content');
 
 let datafile = '../dummyData.json';
 
-let donatePageHtmlFile = './donationCampaigns.html'
+let donorHomePageHtml = './donorHomePage.html';
+let beneficiaryHomePageHtml = 'beneficiaryHomePage.html';
+let donatePageHtmlFile = './donationCampaigns.html';
+let createCharityPageHtml = './createCharity.html';
 
 let DONOR = 'Donor';
 let BENEFICIARY = 'Beneficiary';
 let logAsDonor = false;
-
-// btnLogIn.addEventListener('click', () => {
-
-//     let email = document.querySelector('#txtBoxEmail').value;
-//     let password = document.querySelector('#txtBoxPwd').value;
-
-//     console.dir(isValidUser(email,password))
-//     if (isValidUser(email, password)) {
-//         let logInChoice = document.querySelector('#logInChoice');
-//         if (logInChoice.value == DONOR) {
-//             // load layout for donors
-//             logAsDonor = true;
-//             loadLayoutPage('./btn.html');
-//         } else if (logInChoice.value == BENEFICIARY) {
-//             // load layout for beneficiary
-//             loadLayoutPage('./btn.html');
-//         }
-//     } else {
-//         //print no such an user
-//     }
-// });
 
 btnSignup.addEventListener('click', () => {
     console.dir('in btn sign up');
@@ -46,10 +28,10 @@ function loadHomePage() {
         if (logInChoice.value == DONOR) {
             // load layout for donors
             logAsDonor = true;
-            loadLayoutPage('./btn.html');
+            loadLayoutPage(donorHomePageHtml);
         } else if (logInChoice.value == BENEFICIARY) {
             // load layout for beneficiary
-            loadLayoutPage('./btn.html');
+            loadLayoutPage(beneficiaryHomePageHtml);
         }
     } else {
         //print no such an user
@@ -71,9 +53,17 @@ function laodDonatePage() {
 }
 
 function loadHomePageDonor() {
-    loadLayoutPage('./btn.html');
+    loadLayoutPage(donorHomePageHtml);
+}
+
+function loadHomePageBeneficiary() {
+    loadLayoutPage(beneficiaryHomePageHtml);
 }
 
 function laodLoginPage() {
     loadLayoutPage('./login.html');
+}
+
+function laodCreateCharityPage() {
+    loadLayoutPage(createCharityPageHtml);
 }
