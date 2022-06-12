@@ -62,11 +62,18 @@ button:hover {
 /* Add padding to containers */
 .container {
   padding: 16px;
+  margin: 10px;
+  align-items: center;
+  vertical-align: auto;
 }
 
 /* The "Forgot password" text */
 span.signup {
   float: right;
+}
+
+.img {
+  padding: 100px;
 }
 
 /* *{
@@ -103,7 +110,7 @@ nav {
   justify-content: space-around;
   align-items: center;
   min-height: 8vh;
-  background-color: #04AA6D;
+  background-color: #0507066d;
   font-family: sans-serif;
 }
 
@@ -139,6 +146,15 @@ h4 {
   color: white;
 }
 
-div.header-bar {
+.vertical-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.vertical-container img {
+  width:300px;
+  height: 300px;
+  padding: 10px;
+  margin-left: 10px;
 }
