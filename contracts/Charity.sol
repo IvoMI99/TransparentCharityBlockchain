@@ -34,7 +34,6 @@ contract NGO{
     address payable wallet;
     mapping(address => bool) donator;
     uint8 tax_percent = 1;
-    uint256 public ngo_amount = 0;
     string NGO_name;
 
     constructor(address payable addr, string memory name)public{
@@ -70,6 +69,9 @@ contract NGO{
         return tax_percent;
     }
 
+     function getBalance() public view returns(uint256){
+        return wallet.balance;
+    }
 
     function authenticateDonator(address donatorAddress) 
     public 
@@ -215,9 +217,6 @@ contract NGO{
 
     }
 
-    function donateToNGO(uint256 amount) public authenticateTransaction {
-        ngo_amount += amount;
-    }
 
     function sort_array(CharityLib.Charity[] memory arr_) private pure returns (uint[] memory)
     {
@@ -263,7 +262,7 @@ contract NGO{
     {
         uint[] memory indexes = sort_array(charityList);
         donate_to = min(donate_to,charityList.length);
-        uint256 donation_amount = ((ngo_amount * 85)/100) / donate_to;
+        uint256 donation_amount = ((getBalance() * 85)/100) / donate_to;
         
         for(uint i=0;i<donate_to;++i) {
             charityList[indexes[i]].charityAddress.transfer(donation_amount);
@@ -272,7 +271,6 @@ contract NGO{
             charityList[indexes[i]].donatorsAddress.push(wallet);
             charityList[indexes[i]].donatorsNames.push(NGO_name);
             emit DonationEvent(charityList[indexes[i]],wallet,donation_amount);
-            ngo_amount -= donation_amount;
             closeAllExpired();
         }
     }
@@ -289,15 +287,17 @@ contract Donation {
         uint8 tax_percent = ngo.getTaxPercent();
         uint256 for_NGO = (msg.value * tax_percent)/100;
         uint256 for_charity = msg.value - for_NGO;
-        require(for_charity > 0 && for_charity > 0);
-        ngo.getCharityAddress(index).transfer(for_charity);
+        require(for_charity > 0 && for_NGO > 0,"No money send");
+        (bool sent1, ) = ngo.getCharityAddress(index).call{value: for_charity}("");
+        require(sent1,"Failure! Ehter not sent");
         ngo.contributeToCharity(index,name,for_charity);
-        ngo.getWallet().transfer(for_NGO);
-        ngo.donateToNGO(for_NGO);
+        (bool sent2, ) = ngo.getWallet().call{value: for_NGO}("");
+        require(sent2,"Failure! Ehter not sent");
     }
 
     function donateToNGO() public payable {
-        ngo.getWallet().transfer(msg.value);
+        (bool sent, ) = ngo.getWallet().call{value: msg.value}("");
+        require(sent,"Failure! Ehter not sent");
     }
 
     function vote(uint256 id) public{
