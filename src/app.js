@@ -5,16 +5,12 @@ App = {
 
   load: async() => {
       await App.loadWeb3();
-      console.log("app loading..");
       await App.loadAccount();
-      console.log("app loading..");
       await App.loadContracts();
-      console.log("app loading1..");
       await App.render();
   },
 
   loadWeb3: async () => {
-      console.log("in loadWeb3..");
       if (typeof web3 !== 'undefined') {
         App.web3Provider = web3.currentProvider
         web3 = new Web3(web3.currentProvider)
@@ -37,23 +33,32 @@ App = {
       else {
         console.log('Non-Ethereum browser detected. You should consider trying MetaMask!')
       }
-      console.log("in loadWeb3..end");
     },
 
   loadAccount: async() => {
       await window.ethereum.enable();
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       App.account = accounts[0];
-      console.log(App.account);
     },
 
   loadContracts: async() => {
-    const receive = await $.getJSON('Receive.json');
-    App.contracts.Receive = TruffleContract(receive);
-    App.contracts.Receive.setProvider(App.web3Provider);
-    console.log(receive);
+    const charityFactory = await $.getJSON('CharityFactory.json');
+    App.contracts.CharityFactory = TruffleContract(charityFactory);
+    App.contracts.CharityFactory.setProvider(App.web3Provider);
+    console.log(charityFactory);
+    App.charityFactory = await App.contracts.CharityFactory.deployed()
 
-    App.receive = await App.contracts.Receive.deployed()
+    // const name = "name";
+    // const desc = "desc";
+    // const amount = 1;
+    // const addr = '0x95E7813B58b131A3564Eb1db72A6D17047A4452C';
+    // const daysOpen = 1;
+    // const resAddr = await App.charityFactory.newCharity(name, desc, amount, addr, daysOpen, {from: App.account})
+
+    // console.dir(resAddr);
+    // const cnt = await App.charityFactory.cnt();
+    // console.dir(cnt)
+
   },
 
   render: async() => {
@@ -76,9 +81,12 @@ App = {
       loader.hide();
       content.show();
     }
+  },
+
+  createCharity: async(type, desc, amount, daysOpen, addressReceiver) => {
+    const resAddr = await App.charityFactory.newCharity(type, desc, amount, addressReceiver, daysOpen, {from: App.account})
   }
 }
-
 
 $(() => {
     $(window).load(() => {

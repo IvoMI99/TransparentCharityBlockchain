@@ -1,3 +1,4 @@
+const CharityFactory = artifacts.require("CharityFactory");
 const Receive = artifacts.require("Receive");
 const Donation = artifacts.require("Donation");
 const NGO = artifacts.require("NGO");
@@ -11,6 +12,7 @@ const daysOpen = 1;
 const charity = CharityLib.Charity;
 
 module.exports = function(deployer) {
+    deployer.deploy(CharityFactory);
     deployer.deploy(Receive,name, desc, amount, addr, daysOpen);
     deployer.deploy(NGO, addr, name);
     deployer.deploy(Donation, NGO.address);

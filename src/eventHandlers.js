@@ -67,3 +67,20 @@ function laodLoginPage() {
 function laodCreateCharityPage() {
     loadLayoutPage(createCharityPageHtml);
 }
+
+function createCharity() {
+    let type = document.querySelector('#txtBoxCharityType').value;
+    let desc = document.querySelector('#txtBoxCharityDesc').value;
+    let amount = parseInt(document.querySelector('#txtBoxCharityAmount').value, 10);
+    let daysOpen = parseInt(document.querySelector('#txtBoxDaysOpen').value,10);
+    let addressReceiver = document.querySelector('#txtAddressToDonate').value;
+
+    console.log(type);
+    console.log(desc);
+    console.log(amount);
+    console.log(daysOpen);
+    console.log(addressReceiver);
+    //Create new Charity
+    App.createCharity(type, desc, amount, daysOpen, addressReceiver);
+    loadHomePageBeneficiary();
+}
