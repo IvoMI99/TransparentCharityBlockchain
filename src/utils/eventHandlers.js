@@ -5,10 +5,10 @@ let content = document.querySelector('#content');
 
 let datafile = '../dummyData.json';
 
-let donorHomePageHtml = './donorHomePage.html';
-let beneficiaryHomePageHtml = 'beneficiaryHomePage.html';
-let donatePageHtmlFile = './donationCampaigns.html';
-let createCharityPageHtml = './createCharity.html';
+let donorHomePageHtml = '../donorHomePage.html';
+let beneficiaryHomePageHtml = '../beneficiaryHomePage.html';
+let donatePageHtmlFile = '..//donationCampaigns.html';
+let createCharityPageHtml = '../createCharity.html';
 
 let DONOR = 'Donor';
 let BENEFICIARY = 'Beneficiary';
@@ -42,14 +42,18 @@ function laodAboutPage() {
     console.log('in about ')
 }
 
-function laodDonatePage() {
+async function laodDonatePage() {
     console.log('in donate ')
     loadLayoutPage(donatePageHtmlFile);
-    // $(document).ready(function() {
-    //     $("ul").append('<img src="./images/image.png" alt="home-page">')
-    //     $("ul").append('<img src="./images/image.png" alt="home-page">')
-    //     $("ul").append('<img src="./images/image.png" alt="home-page">')
-    // });
+
+    let charityNames = await App.getCharitiesNames();
+
+    let charityDropDown = document.querySelector('#charityDropDown');
+
+    for (var i = 0; i < charityNames.length; i++) {
+        var option = '<option value="'+ i + '" >' + charityNames[0] + '</option>';
+        charityDropDown.insertAdjacentHTML( 'beforeend', option );
+    }
 }
 
 function loadHomePageDonor() {
@@ -75,12 +79,12 @@ function createCharity() {
     let daysOpen = parseInt(document.querySelector('#txtBoxDaysOpen').value,10);
     let addressReceiver = document.querySelector('#txtAddressToDonate').value;
 
-    console.log(type);
-    console.log(desc);
-    console.log(amount);
-    console.log(daysOpen);
-    console.log(addressReceiver);
-    //Create new Charity
     App.createCharity(type, desc, amount, daysOpen, addressReceiver);
     loadHomePageBeneficiary();
+}
+
+function donateToCharity() {
+    console.dir("CHARITY OPTION")
+    let logInChoice = document.querySelector('#charityDropDown').value;
+    console.dir(logInChoice == "Selected charity");
 }

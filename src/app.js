@@ -85,6 +85,22 @@ App = {
 
   createCharity: async(type, desc, amount, daysOpen, addressReceiver) => {
     const resAddr = await App.charityFactory.newCharity(type, desc, amount, addressReceiver, daysOpen, {from: App.account})
+  },
+
+  getCharitiesCnt: async() => {
+    const cnt = await App.charityFactory.cnt();
+    return cnt.toNumber();
+  },
+
+  getCharitiesNames: async() => {
+    const cnt = await App.getCharitiesCnt();
+    var charitiesNames = []
+    for (let i = 0; i < cnt; i++) {
+      const charityName = await App.charityFactory.getNthCharityName(i);
+      charitiesNames.push(charityName);
+    }
+    console.dir(charitiesNames);
+    return charitiesNames
   }
 }
 

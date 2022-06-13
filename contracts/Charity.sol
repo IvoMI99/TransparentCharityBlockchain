@@ -364,14 +364,20 @@ contract Receive{
 contract CharityFactory {
 
     uint256 public cnt;
-    mapping(uint256 => address) public charities;
+    mapping(uint256 => Receive) public charities;
 
-    constructor ()public { }
+    constructor ()public { 
+        cnt = 0;
+    }
 
     function newCharity(string memory name,string memory description,uint256 amount,address payable addr,uint256 daysOpen) public returns (address newCar) {
         Receive charity = (new Receive(name, description,amount, addr, daysOpen));
-        charities[cnt] = address(charity);
+        charities[cnt] = charity;
         cnt++;
         return address(charity);
+    }
+
+    function getNthCharityName(uint256 n) public view returns(string memory) {
+        return charities[n].charityName();
     }
 }
