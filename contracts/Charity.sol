@@ -364,7 +364,7 @@ contract Receive{
 contract CharityFactory {
 
     uint256 public cnt;
-    mapping(uint256 => address) charities;
+    mapping(uint256 => address) public charities;
 
     constructor ()public { }
 
