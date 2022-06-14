@@ -99,8 +99,28 @@ App = {
       const charityName = await App.charityFactory.getNthCharityName(i);
       charitiesNames.push(charityName);
     }
-    console.dir(charitiesNames);
     return charitiesNames
+  },
+
+  loadCharitiesNamesAndAddresses: async() => {
+    let cnt = await App.charityFactory.cnt();
+    let charities = []
+    for (let i = 0; i < cnt; i++) {
+        let charityName = await App.charityFactory.getNthCharityName(i);
+        let charityAddress = await App.charityFactory.getNthCharityAddress(i);
+        let pair = {id: i, name: charityName, address: charityAddress};
+        charities.push(pair);
+    }
+    return charities;
+  },
+
+  getNthCharity: async(n) => {
+    let charity = await App.charityFactory.getNthCharity(n);
+    return charity;
+  },
+
+  donateNthCharity: async(n, amount) => {
+    await App.charityFactory.donateNthCharity(n, amount,{ from: App.account});
   }
 }
 

@@ -324,7 +324,7 @@ contract Receive{
     string public description;
     uint256 public requiredAmount;
     uint256 public collectedAmount;
-    address payable charityAddress;
+    address payable public charityAddress;
     uint256 public dueDate;
     bool public isOpen;
 
@@ -379,5 +379,17 @@ contract CharityFactory {
 
     function getNthCharityName(uint256 n) public view returns(string memory) {
         return charities[n].charityName();
+    }
+
+    function getNthCharityAddress(uint256 n) public view returns(address payable) {
+        return charities[n].charityAddress();
+    }
+
+    function getNthCharity(uint256 n) public view returns(Receive) {
+        return charities[n];
+    }
+
+    function donateNthCharity(uint256 n, uint256 amount) public payable {
+        charities[n].donate{value: amount}();
     }
 }

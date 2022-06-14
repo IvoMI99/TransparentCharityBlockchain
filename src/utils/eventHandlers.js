@@ -51,7 +51,7 @@ async function laodDonatePage() {
     let charityDropDown = document.querySelector('#charityDropDown');
 
     for (var i = 0; i < charityNames.length; i++) {
-        var option = '<option value="'+ i + '" >' + charityNames[0] + '</option>';
+        var option = '<option value="'+ `${charityNames[i]}` + '" >' + charityNames[i] + '</option>';
         charityDropDown.insertAdjacentHTML( 'beforeend', option );
     }
 }
@@ -83,8 +83,14 @@ function createCharity() {
     loadHomePageBeneficiary();
 }
 
-function donateToCharity() {
+async function donateToCharity() {
     console.dir("CHARITY OPTION")
-    let logInChoice = document.querySelector('#charityDropDown').value;
-    console.dir(logInChoice == "Selected charity");
+    let charityChoice = document.querySelector('#charityDropDown').value;
+    if (charityChoice != "Selected charity") {
+        let charities = await App.loadCharitiesNamesAndAddresses();
+        let idCharity = getUserCharity(charities, charityChoice);
+        await App.donateNthCharity(idCharity, 100);
+    }else {
+        window.alert("Please select a charity..")
+    }
 }

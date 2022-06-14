@@ -20,3 +20,11 @@ function loadLayoutPage(sourceHtml) {
     }
     xhr.send();
 }
+
+function getUserCharity(charities, name) {
+    for (let i = 0; i < charities.length; i++) {
+        if (charities[i].name == name) {
+            return charities[i].id;
+        }
+    }
+}
