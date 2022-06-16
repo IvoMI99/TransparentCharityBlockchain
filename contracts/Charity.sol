@@ -389,7 +389,7 @@ contract CharityFactory {
         return charities[n];
     }
 
-    function donateNthCharity(uint256 n, uint256 amount) public payable {
+    function donateNthCharity(uint256 n) public payable {
         charities[n].donate();
     }
 }

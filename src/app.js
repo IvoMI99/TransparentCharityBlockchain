@@ -113,11 +113,14 @@ App = {
   },
 
   donateNthCharity: async(n, amount) => {
-    await App.charityFactory.donateNthCharity(n, amount,{ from: App.account});
+    let amountTxt = amount.toString();
+    await App.charityFactory.donateNthCharity(n, { from: App.account, value: web3.utils.toWei(amountTxt, "ether")});
   },
+
   //NGO funcs.
   createCharityNGO: async(type, desc, amount, daysOpen, addressReceiver) => {
-    await App.NGO.addCharity(type, desc, amount, addressReceiver, daysOpen, {from: App.account})
+    let res = await App.NGO.addCharity(type, desc, amount, addressReceiver, daysOpen, {from: App.account})
+    console.dir(res)
   },
 
   sendEth: async(from, to, amount) => {
@@ -125,12 +128,7 @@ App = {
     const myAddress = '0xC4bC8F2a540C40cC392166373B86e3679d100F50'
     const toAddress = '0xc38920843f5FdE4D1313FC067DA309E40b753c17'
 
-    // let web3 = new Web3(ethereum)
 
-    console.dir(web3.eth);
-    console.dir(web3.eth.getBalance(App.account))
-
-    console.dir(web3.utils)
     const amountEth = web3.utils.toWei('10', "ether");
     console.dir(amountEth);
 
@@ -147,8 +145,7 @@ App = {
      web3.eth.sendSignedTransaction(signedTx.rawTransaction, function(error, hash) {
       if (!error) {
         console.log("The hash of your transaction is: ", hash, "\n Check the block explorer!");
-      
-      console.log("WEI: "+amount+" sent to this address "+ toAddress)
+        console.log("WEI: "+amount+" sent to this address "+ toAddress)
       } else {
         console.log("Something went wrong while submitting your transaction:", error)
       }

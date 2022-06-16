@@ -96,17 +96,17 @@ async function createCharityNGO() {
     let daysOpen = parseInt(document.querySelector('#txtBoxDaysOpen').value,10);
     let addressReceiver = document.querySelector('#txtAddressToDonate').value;
 
-    App.createCharityNGO(type, desc, amount, daysOpen, addressReceiver);
+    await App.createCharityNGO(type, desc, amount, daysOpen, addressReceiver);
     loadLayoutPage(NGOHomePageHtml)
 }
 
 async function donateToCharity() {
     let charityChoice = document.querySelector('#charityDropDown').value;
+    let amount = document.querySelector('#txtAmoutCharity');
     if (charityChoice != "Selected charity") {
-        let amount = document.querySelector('#txtAmoutCharity');
         let charities = await App.loadCharitiesNamesAndAddresses();
         let idCharity = getUserCharity(charities, charityChoice);
-        await App.donateNthCharity(idCharity, 123);
+        await App.donateNthCharity(idCharity, 55);
     }else {
         window.alert("Please select a charity..")
     }
