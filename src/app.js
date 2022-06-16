@@ -42,23 +42,16 @@ App = {
     },
 
   loadContracts: async() => {
+    //Deploying charity factory
     const charityFactory = await $.getJSON('CharityFactory.json');
     App.contracts.CharityFactory = TruffleContract(charityFactory);
     App.contracts.CharityFactory.setProvider(App.web3Provider);
-    console.log(charityFactory);
     App.charityFactory = await App.contracts.CharityFactory.deployed()
-
-    // const name = "name";
-    // const desc = "desc";
-    // const amount = 1;
-    // const addr = '0x95E7813B58b131A3564Eb1db72A6D17047A4452C';
-    // const daysOpen = 1;
-    // const resAddr = await App.charityFactory.newCharity(name, desc, amount, addr, daysOpen, {from: App.account})
-
-    // console.dir(resAddr);
-    // const cnt = await App.charityFactory.cnt();
-    // console.dir(cnt)
-
+    //Deploying ngo
+    const ngo = await $.getJSON('NGO.json');
+    App.contracts.NGO = TruffleContract(ngo);
+    App.contracts.NGO.setProvider(App.web3Provider);
+    App.NGO = await App.contracts.NGO.deployed()
   },
 
   render: async() => {
@@ -121,7 +114,46 @@ App = {
 
   donateNthCharity: async(n, amount) => {
     await App.charityFactory.donateNthCharity(n, amount,{ from: App.account});
-  }
+  },
+  //NGO funcs.
+  createCharityNGO: async(type, desc, amount, daysOpen, addressReceiver) => {
+    await App.NGO.addCharity(type, desc, amount, addressReceiver, daysOpen, {from: App.account})
+  },
+
+  sendEth: async(from, to, amount) => {
+    const pkey = '5356737b9e5f097600f7979ecf8937aa3f06b79bc9da120654b08e4841ee71e5'
+    const myAddress = '0xC4bC8F2a540C40cC392166373B86e3679d100F50'
+    const toAddress = '0xc38920843f5FdE4D1313FC067DA309E40b753c17'
+
+    // let web3 = new Web3(ethereum)
+
+    console.dir(web3.eth);
+    console.dir(web3.eth.getBalance(App.account))
+
+    console.dir(web3.utils)
+    const amountEth = web3.utils.toWei('10', "ether");
+    console.dir(amountEth);
+
+    const transaction = {
+      'from': from,
+      'to': to,
+      'value': amountEth,
+      'gas': 30000,
+      'maxFeePerGas': 30000,
+      'maxPriorityFeePerGas': 30000,
+     };
+
+     const signedTx = await web3.eth.accounts.signTransaction(transaction, pkey);
+     web3.eth.sendSignedTransaction(signedTx.rawTransaction, function(error, hash) {
+      if (!error) {
+        console.log("The hash of your transaction is: ", hash, "\n Check the block explorer!");
+      
+      console.log("WEI: "+amount+" sent to this address "+ toAddress)
+      } else {
+        console.log("Something went wrong while submitting your transaction:", error)
+      }
+     });
+    },
 }
 
 $(() => {

@@ -7,28 +7,32 @@ let datafile = '../dummyData.json';
 
 let donorHomePageHtml = '../donorHomePage.html';
 let beneficiaryHomePageHtml = '../beneficiaryHomePage.html';
+let NGOHomePageHtml = '../ngoHomePage.html';
 let donatePageHtmlFile = '..//donationCampaigns.html';
 let createCharityPageHtml = '../createCharity.html';
+let createNGOCharityPageHtml = '../createNGOCharity.html'
 
 let DONOR = 'Donor';
+let NGO = 'NGO';
 let BENEFICIARY = 'Beneficiary';
 let logAsDonor = false;
 
 btnSignup.addEventListener('click', () => {
-    console.dir('in btn sign up');
 });
 
 function loadHomePage() {
     let email = document.querySelector('#txtBoxEmail').value;
     let password = document.querySelector('#txtBoxPwd').value;
 
-    console.dir(isValidUser(email,password))
     if (isValidUser(email, password)) {
         let logInChoice = document.querySelector('#logInChoice');
         if (logInChoice.value == DONOR) {
             // load layout for donors
             logAsDonor = true;
             loadLayoutPage(donorHomePageHtml);
+        } else if (logInChoice.value == NGO) {
+            // load layout for NGO
+            loadLayoutPage(NGOHomePageHtml);
         } else if (logInChoice.value == BENEFICIARY) {
             // load layout for beneficiary
             loadLayoutPage(beneficiaryHomePageHtml);
@@ -39,11 +43,9 @@ function loadHomePage() {
 }
 
 function laodAboutPage() {
-    console.log('in about ')
 }
 
 async function laodDonatePage() {
-    console.log('in donate ')
     loadLayoutPage(donatePageHtmlFile);
 
     let charityNames = await App.getCharitiesNames();
@@ -72,6 +74,10 @@ function laodCreateCharityPage() {
     loadLayoutPage(createCharityPageHtml);
 }
 
+function laodCreateNGOCharityPage() {
+    loadLayoutPage(createNGOCharityPageHtml)
+}
+
 function createCharity() {
     let type = document.querySelector('#txtBoxCharityType').value;
     let desc = document.querySelector('#txtBoxCharityDesc').value;
@@ -83,13 +89,36 @@ function createCharity() {
     loadHomePageBeneficiary();
 }
 
+async function createCharityNGO() {
+    let type = document.querySelector('#txtBoxCharityType').value;
+    let desc = document.querySelector('#txtBoxCharityDesc').value;
+    let amount = parseInt(document.querySelector('#txtBoxCharityAmount').value, 10);
+    let daysOpen = parseInt(document.querySelector('#txtBoxDaysOpen').value,10);
+    let addressReceiver = document.querySelector('#txtAddressToDonate').value;
+
+    App.createCharityNGO(type, desc, amount, daysOpen, addressReceiver);
+    loadLayoutPage(NGOHomePageHtml)
+}
+
 async function donateToCharity() {
-    console.dir("CHARITY OPTION")
     let charityChoice = document.querySelector('#charityDropDown').value;
     if (charityChoice != "Selected charity") {
+        let amount = document.querySelector('#txtAmoutCharity');
         let charities = await App.loadCharitiesNamesAndAddresses();
         let idCharity = getUserCharity(charities, charityChoice);
-        await App.donateNthCharity(idCharity, 100);
+        await App.donateNthCharity(idCharity, 123);
+    }else {
+        window.alert("Please select a charity..")
+    }
+}
+
+async function donateToCharityNGO() {
+    let charityChoice = document.querySelector('#ngoDropDown').value;
+    if (charityChoice != "Selected charity") {
+        let amount = document.querySelector('#txtAmoutCharity');
+        let charities = await App.loadCharitiesNamesAndAddresses();
+        let idCharity = getUserCharity(charities, charityChoice);
+        App.sendEth(App.account, '0xc38920843f5FdE4D1313FC067DA309E40b753c17', 9999999999999999);
     }else {
         window.alert("Please select a charity..")
     }

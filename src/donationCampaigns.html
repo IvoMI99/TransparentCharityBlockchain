@@ -16,16 +16,20 @@
       <div class="container" >
         <label for="ngoChoice"><b>Choose NGO to donate to: </b></label>
         <select id="ngoDropDown">
+            <option value="Selected NGO">Selected NGO</option>
+            <option value="DEMO-NGO">DEMO-NGO</option>
 <!-- add dynamically ngo options -->
         </select>
           <label for="charityChoice"><b>Choose charity to donate to: </b></label>
           <select id="ngoCharityDropDown">
+            <option value="Selected charity">Selected charity</option>
+            <option value="test-charity-ngo">test-charity-ngo</option>
 <!-- add dynamically ngos charity options-->
           </select>
           <label for="donation-value"><b>Amount ETH: </b></label>
           <input id="txtAmoutNGO></input>
           <div class="container" style="background-color:#f1f1f1">
-              <button type="button" class="button" id="btnDonate">DONATE</button>
+              <button type="button" class="button" id="btnDonate" onclick="donateToCharityNGO()">DONATE</button>
         </div>
       </form>
     </div>

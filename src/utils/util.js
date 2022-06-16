@@ -1,6 +1,5 @@
 function isValidUser(email, password) {
     return $.getJSON(datafile, function(json) {
-        console.log(json);
         json.forEach(element => {
             if (element.email == email && element.password == password) {
                 return true;
