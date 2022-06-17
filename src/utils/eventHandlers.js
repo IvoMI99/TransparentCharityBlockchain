@@ -102,11 +102,11 @@ async function createCharityNGO() {
 
 async function donateToCharity() {
     let charityChoice = document.querySelector('#charityDropDown').value;
-    let amount = document.querySelector('#txtAmoutCharity');
+    let amount = parseInt(document.querySelector('#txtAmoutCharity').value);
     if (charityChoice != "Selected charity") {
         let charities = await App.loadCharitiesNamesAndAddresses();
         let idCharity = getUserCharity(charities, charityChoice);
-        await App.donateNthCharity(idCharity, 55);
+        await App.donateNthCharity(idCharity, amount);
     }else {
         window.alert("Please select a charity..")
     }
@@ -114,11 +114,11 @@ async function donateToCharity() {
 
 async function donateToCharityNGO() {
     let charityChoice = document.querySelector('#ngoDropDown').value;
+    let amount = parseInt(document.querySelector('#txtAmoutNGO').value);
     if (charityChoice != "Selected charity") {
-        let amount = document.querySelector('#txtAmoutCharity');
         let charities = await App.loadCharitiesNamesAndAddresses();
         let idCharity = getUserCharity(charities, charityChoice);
-        App.sendEth(App.account, '0xc38920843f5FdE4D1313FC067DA309E40b753c17', 9999999999999999);
+        App.sendEth(App.account, '0xc38920843f5FdE4D1313FC067DA309E40b753c17', amount);
     }else {
         window.alert("Please select a charity..")
     }

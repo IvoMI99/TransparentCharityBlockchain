@@ -1,18 +1,6 @@
-<body>
-  <nav>
-    <div class="topnav">
-        <button type="button" id="btnHome" onclick="loadHomePageDonor()">Home</button>
-        <button type="button" id="btnAbout" onclick="laodAboutPage()">About</button>
-    </div>
-    <div class='header-bar'>
-      <h4> Transparent Charity Donations </h4>
-    </div>
-  </nav>
-  <nav>
-      <div class='header-bar'>
-          <h4 padding="10px"> DONATE to NGO </h4>
-      </div>
-      <img src="./images/image.png" alt="home-page">
+<form action="action_page.php" method="post">
+    <div class="container">
+      <h1 >DONATE TO  NGO</h1>
       <div class="container" >
         <label for="ngoChoice"><b>Choose NGO to donate to: </b></label>
         <select id="ngoDropDown">
@@ -27,30 +15,30 @@
 <!-- add dynamically ngos charity options-->
           </select>
           <label for="donation-value"><b>Amount ETH: </b></label>
-          <input id="txtAmoutNGO></input>
+          <input type="text" id="txtAmoutNGO"> </input>
           <div class="container" style="background-color:#f1f1f1">
               <button type="button" class="button" id="btnDonate" onclick="donateToCharityNGO()">DONATE</button>
         </div>
       </form>
     </div>
-  </nav>
-  <nav>
-    <div class='header-bar'>
-        <h4> DONATE to Charity </h4>
     </div>
-    <img src="./images/image.png" alt="home-page">
+  </form>
+
+  <form action="action_page.php" method="post">
     <div class="container">
+      <h1 >DONATE TO  CHARITY</h1>
+      <div class="container" >
         <label for="ngoCharity"><b>Choose charity to donate to: </b></label>
         <select id="charityDropDown">
           <option value="Selected charity">Selected charity</option>
           <!-- add dynamically charities-->
         </select>
         <label for="donation-value"><b>Amount ETH: </b></label>
-        <input id="txtAmoutCharity></input>
+        <input type="text" id="txtAmoutCharity"></input>
         <div class="container" style="background-color:#f1f1f1">
             <button type="button" class="button" id="btnDonateToCharity" onclick="donateToCharity()">DONATE</button>
       </div>
-    </form>
-  </div>
-</nav>
-</body>
+      </form>
+    </div>
+    </div>
+  </form>
