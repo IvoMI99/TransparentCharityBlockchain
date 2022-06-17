@@ -113,21 +113,21 @@ App = {
   },
 
   donateNthCharity: async(n, amount) => {
-    let amountTxt = amount.toString();
     let toAddr = await App.charityFactory.getNthCharityAddress(n);
     console.dir(toAddr);
     // await App.charityFactory.donateNthCharity(n, { from: App.account, value: web3.utils.toWei(amountTxt, "ether")}).call();
-    App.sendEth(App.account, toAddr, amount);
+    await App.sendEth(App.account, toAddr, amount);
   },
 
   //NGO funcs.
   createCharityNGO: async(type, desc, amount, daysOpen, addressReceiver) => {
+    console.dir('debug print')
     let res = await App.NGO.addCharity(type, desc, amount, addressReceiver, daysOpen, {from: App.account})
     console.dir(res)
   },
 
   sendEth: async(from, to, amount) => {
-    const pkey = '7eefda2786c8630ce0e2c40aab6abcddf52304d89ee44dfb8001318fd8dceea1'
+    const pkey = 'a3eba539474de7f8c41ad14a38e362389ab8ec4b8d72b852bb6272eefc6c5f43'
     const myAddress = from
     const toAddress = to
 

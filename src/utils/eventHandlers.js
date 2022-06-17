@@ -8,7 +8,7 @@ let datafile = '../dummyData.json';
 let donorHomePageHtml = '../donorHomePage.html';
 let beneficiaryHomePageHtml = '../beneficiaryHomePage.html';
 let NGOHomePageHtml = '../ngoHomePage.html';
-let donatePageHtmlFile = '..//donationCampaigns.html';
+let donatePageHtmlFile = '../donationCampaigns.html';
 let createCharityPageHtml = '../createCharity.html';
 let createNGOCharityPageHtml = '../createNGOCharity.html'
 
@@ -107,6 +107,7 @@ async function donateToCharity() {
         let charities = await App.loadCharitiesNamesAndAddresses();
         let idCharity = getUserCharity(charities, charityChoice);
         await App.donateNthCharity(idCharity, amount);
+        loadHomePageDonor();
     }else {
         window.alert("Please select a charity..")
     }
@@ -118,7 +119,8 @@ async function donateToCharityNGO() {
     if (charityChoice != "Selected charity") {
         let charities = await App.loadCharitiesNamesAndAddresses();
         let idCharity = getUserCharity(charities, charityChoice);
-        App.sendEth(App.account, '0xc38920843f5FdE4D1313FC067DA309E40b753c17', amount);
+        App.sendEth(App.account, '0xb52C4Dc6D72baecA41E0410214FCa144cE272849', amount);
+        loadHomePageDonor();
     }else {
         window.alert("Please select a charity..")
     }
